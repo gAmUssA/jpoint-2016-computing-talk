@@ -1,0 +1,97 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'eclipse'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
+}
+
+group = 'com.hazelcast.starter'
+version = '1.0-SNAPSHOT'
+
+description = """
+Hazelcast Starter project for Gradle Users
+"""
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+mainClassName = "com.hazelcast.gradle.starter.Starter"
+applicationDefaultJvmArgs = ["-Xms$HZ_MIN_HEAP_SIZE", "-Xmx$HZ_MAX_HEAP_SIZE"]
+
+repositories {
+    jcenter()
+
+    maven {
+        name 'Hazelcast OSS Snapshots'
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+
+    maven {
+        name 'Hazelcast Enterprise Releases'
+        url 'https://repository-hazelcast-l337.forge.cloudbees.com/release/'
+    }
+
+    maven {
+        name 'Hazelcast Enterprise Snapshots'
+        url 'https://repository-hazelcast-l337.forge.cloudbees.com/snapshot/'
+    }
+}
+
+dependencies {
+
+    compile "com.hazelcast:hazelcast:$HZ_VERSION"
+    compile "com.hazelcast:hazelcast-client:$HZ_VERSION"
+
+    compile 'org.slf4j:slf4j-api:1.7.12'
+    compile 'ch.qos.logback:logback-classic:1.1.3'
+
+    // compile "com.hazelcast:hazelcast-client-legacy:$HZ_VERSION"
+    // compile "com.hazelcast:hazelcast-wm:$HZ_VERSION"
+    // compile "com.hazelcast:hazelcast-spring:$HZ_VERSION"
+
+    // Cloud Support
+    // compile "com.hazelcast:hazelcast-cloud:$HZ_VERSION"
+    // compile "com.hazelcast:hazelcast-jclouds:$HZ_VERSION"
+
+    // Hibernate 2nd Level Cache Support
+    // compile "com.hazelcast:hazelcast-hibernate:$HZ_VERSION"
+    // compile "com.hazelcast:hazelcast-hibernate3:$HZ_VERSION"
+    // compile "com.hazelcast:hazelcast-hibernate4:$HZ_VERSION"
+
+    // Hazelcast Enterprise
+    // compile "com.hazelcast:hazelcast-enterprise:$HZ_VERSION"
+    // compile "com.hazelcast:hazelcast-enterprise-client:$HZ_VERSION"
+
+    // JCache dependency
+    compile "javax.cache:cache-api:1.0.0"
+
+    // Hazelcast Test Support
+    testCompile "com.hazelcast:hazelcast:$HZ_VERSION:tests"
+}
+
+task collectJars(type: Copy) {
+    into "$buildDir/dependencies"
+    from configurations.testRuntime
+}
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+eclipse {
+    classpath {
+        downloadJavadoc = true
+    }
+}
+
+task(execute, dependsOn: 'processResources') << {
+    javaexec() {
+        main = mainClass
+        classpath = sourceSets.main.runtimeClasspath
+        jvmArgs = applicationDefaultJvmArgs
+    }
+}
