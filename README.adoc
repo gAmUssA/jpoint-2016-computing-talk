@@ -22,88 +22,9 @@ Viktor Gamov <viktor@hazelcast.com>, © 2016 Hazelcast, Inc.
 :highlightjs-theme: idea
 :experimental:
 
-Here is an example how to quickly start a new Hazelcast Project with Gradle.
+Demo app of Executor Service and MapReduce
 
 toc::[]
-
-
-== How To Use
-
-. Clone this repository
-+
-
-----
-git clone git@github.com:hazelcast/hazelcast-gradle-starter.git
-----
-
-. Remove Hazelcast's origin
-+
-
-----
-git remote remove origin
-----
-
-. Add YOUR own `origin` and start coding
-+
-
-----
-git remote add origin https://github.com/awesome_user/awesome_project
-----
-
-. PROFIT!!!
-+
-
-image::http://www.chicagonow.com/swirleytime/files/2014/05/dance21.gif[]
-
-== What's in a box?
-
-* Gradle Wrapper FTW! No need to have Gradle installed.
-* `build.gradle` with Hazelcast repositories (including Enterprise and SNAPSHOTS)
-* Easy Hazelcast version management with `gradle.properties`
-* Hazelcast dependencies (including Testing Framework)
-* UberJar configuration via https://github.com/johnrengelman/shadow[shadow] Gradle plugin.
-
-=== Directory layout
-
-----
-.
-├── README.adoc                     #<1>
-├── build.gradle
-├── gradle
-│   └── wrapper
-│       ├── gradle-wrapper.jar
-│       └── gradle-wrapper.properties
-├── gradle.properties                   #<2>
-├── gradlew                             #<3>
-├── gradlew.bat                         #<3>
-├── hazelcast-gradle-starter.iml
-├── settings.gradle
-└── src
-    └── main
-        ├── java
-        │   └── com
-        │       └── hazelcast
-        │           └── gradle
-        │               └── starter
-        │                   └── Starter.java   #<4>
-        └── resources
-            ├── hazelcast-client.xml
-            └── hazelcast.xml               #<5>
-----
-<1> This file
-<2> JVM properties, Hazelcast version configs
-<3> Gradle wrapper
-<4> Entry point of your Hazelcast application
-<5> Hazelcast server configuration file
-
-=== Run your Hazelcast application
-
-----
-./gradlew run #<1>
-----
-<1> This will use `Starter.java` to start your Hazelcast application. 
-This can be changed in `build.gradle`.
-Look for `mainClassName` property.
 
 === Produce UberJar
 
@@ -112,14 +33,4 @@ Look for `mainClassName` property.
 ----
 <1> This command will produce executable jar with `Starter.class` as `Main-Class`.
 This can be changed in `build.gradle`.
-Look for `mainClassName` property.
-
-=== Start Hazelcast Member Node
-
-To start Hazelcast member node. 
-By default, a member will use `hazelcast.xml` from `src/main/resources` folder.
-
-.Gradle
-----
-./gradlew execute -PmainClass=com.hazelcast.core.server.StartServer
-----
+Look for `mainClassName` propert
